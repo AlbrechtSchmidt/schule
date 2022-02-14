@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>jQuery UI Touch Punch - Mobile Device Touch Event Support for jQuery UI</title>
+
+    
+
+
+    
+    <style>body { background:#fff; font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; }</style>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery.ui.all.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/css/lightness/jquery-ui-1.10.2.custom.min.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
+  </head>
+  <body onload=mixAnswers();>
+
+    <audio id="happySound" preload="auto">
+        <source src="../m/super.mp3" />
+    </audio>
+      
+
+      <style>
+        #draggable0 { width: 290px; height: 118px; padding: 0.5em; float: left;  }
+        #droppable0 { width: 260px; height: 120px; padding: 0.5em; float: left;  }
+        #draggable1 { width: 290px; height: 118px; padding: 0.5em; float: left; }
+        #droppable1 { width: 260px; height: 120px; padding: 0.5em; float: left;  }
+        #draggable2 { width: 290px; height: 118px; padding: 0.5em; float: left;  }
+        #droppable2 { width: 260px; height: 120px; padding: 0.5em; float: left;  }
+        #draggable3 { width: 290px; height: 118px; padding: 0.5em; float: left;  }
+        #droppable3 { width: 260px; height: 120px; padding: 0.5em; float: left;  }
+        #draggable4 { width: 290px; height: 118px; padding: 0.5em; float: left;  }
+        #droppable4 { width: 260px; height: 120px; padding: 0.5em; float: left;  }
+        #draggable5 { width: 290px; height: 118px; padding: 0.5em; float: left;  }
+        #droppable5 { width: 260px; height: 120px; padding: 0.5em; float: left;  }
+        #draggable6 { width: 290px; height: 118px; padding: 0.5em; float: left;  }
+        #droppable6 { width: 260px; height: 120px; padding: 0.5em; float: left;  }
+ 
+      
+
+        </style>
+        <script>
+            function startup()
+            {          
+ 	            mixAnswers();
+            };
+
+            function mixAnswers()
+            { 
+                var x = document.getElementById("field0").innerHTML;         
+                var y = document.getElementById("field1").innerHTML;      
+             //var x  =  document.getElementById("field0").innerHTML.value;
+             //var y =  document.getElementById("field1").innerHTML.value;
+                
+           
+
+             var a = [];
+            
+                 a[0] = document.getElementById("field0").innerHTML;         
+                 a[1] = document.getElementById("field1").innerHTML; 
+
+                 a[2] = document.getElementById("field2").innerHTML;      
+                a[3] = document.getElementById("field3").innerHTML;      
+                 a[4] = document.getElementById("field4").innerHTML;      
+                 a[5] = document.getElementById("field5").innerHTML;      
+                 a[6] = document.getElementById("field6").innerHTML;      
+    
+              var helpStr="";
+                for (var i=0;i<20;i++)
+                {
+                    ind1= parseInt( Math.random() * ( 7 ) );
+                    ind2= parseInt( Math.random() * ( 7 ) );
+                    if(ind1>6) {ind1=6;}
+                    if(ind2>6) {ind2=6;}
+                    if(ind1<0) {ind1=0;}
+                    if(ind2<0) {ind2=0;}
+                    
+                    helpStr = a[ind1];
+                    a[ind1] = a[ind2];
+                    a[ind2] = helpStr;
+                }
+
+                $('#field0').html(a[0]);
+                $('#field1').html(a[1]);
+                $('#field2').html(a[2]);
+                $('#field3').html(a[3]);
+                $('#field4').html(a[4]);
+                $('#field5').html(a[5]);
+                $('#field6').html(a[6]);
+
+                // $('#field1').html("<b>test2</b>");
+                // $('#field0').html(y);
+                // $('#field0').html(y);
+              
+                // $('#field0').empty().append(y);
+                // $('#field1').html(x);
+
+                 makeDragable();
+                 
+                
+
+            };
+
+            function checkDone()
+            {
+                /*doneVal=7;
+                if(window.document.ctrlForm.r0.value=="X") {doneVal=doneVal-1;}
+                if(window.document.ctrlForm.r1.value=="X") {doneVal=doneVal-1;}
+                if(window.document.ctrlForm.r2.value=="X") {doneVal=doneVal-1;}
+                if(window.document.ctrlForm.r3.value=="X") {doneVal=doneVal-1;}
+                if(window.document.ctrlForm.r4.value=="X") {doneVal=doneVal-1;}
+                if(window.document.ctrlForm.r5.value=="X") {doneVal=doneVal-1;}
+                if(window.document.ctrlForm.r6.value=="X") {doneVal=doneVal-1;}
+                window.document.ctrlForm.count.value = doneVal;
+                if (doneVal==7) {checkAnswers();}
+                */
+                checkAnswers();
+            };
+
+            function checkAnswers()
+            {
+                correct = 0;
+
+                str = window.document.ctrlForm.r0.value;
+                var res1 = str.substr(11, 1);
+                var res2 = str.substr(22, 1);
+                if (res1==res2) {correct=correct+1;}
+                str = window.document.ctrlForm.r1.value;
+                var res1 = str.substr(11, 1);
+                var res2 = str.substr(22, 1);
+                if (res1==res2) {correct=correct+1;}
+                str = window.document.ctrlForm.r2.value;
+                var res1 = str.substr(11, 1);
+                var res2 = str.substr(22, 1);
+                if (res1==res2) {correct=correct+1;}
+                str = window.document.ctrlForm.r3.value;
+                var res1 = str.substr(11, 1);
+                var res2 = str.substr(22, 1);
+                if (res1==res2) {correct=correct+1;}
+                str = window.document.ctrlForm.r4.value;
+                var res1 = str.substr(11, 1);
+                var res2 = str.substr(22, 1);
+                if (res1==res2) {correct=correct+1;}
+                str = window.document.ctrlForm.r5.value;
+                var res1 = str.substr(11, 1);
+                var res2 = str.substr(22, 1);
+                if (res1==res2) {correct=correct+1;}
+                str = window.document.ctrlForm.r6.value;
+                var res1 = str.substr(11, 1);
+                var res2 = str.substr(22, 1);
+                if (res1==res2) {correct=correct+1;}
+
+
+                window.document.ctrlForm.count.value=correct;
+
+                if (correct==7) {
+                    window.document.ctrlForm.result.value="Super! Alles richtig!";
+
+                    document.getElementById('topImg').src="../m/happy.gif";
+                    document.getElementById('happySound').play();
+                    document.getElementById('topImg').style.display="block";
+                    window.document.Rechner.question.value =  "super !!!      ";
+                    setTimeout(hideImg, 4000);
+                }
+            };
+
+            function hideImg()
+            {
+              document.getElementById('topImg').style.display="none";
+            };
+
+            function makeDragable() {
+                $( "#draggable0" ).draggable();
+              $( "#draggable1" ).draggable();
+              $( "#draggable2" ).draggable();
+              $( "#draggable3" ).draggable();
+              $( "#draggable4" ).draggable();
+              $( "#draggable5" ).draggable();
+              $( "#draggable6" ).draggable();
+
+              $( "#droppable0" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(  event.target.id + "..." + ui.draggable.context.id   );
+                      window.document.ctrlForm.r0.value = "0:" + event.target.id + "=" + ui.draggable.context.id;
+                    checkDone();
+
+                }
+              });
+
+
+              $( "#droppable1" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(   event.target.id + "..." + ui.draggable.context.id  );
+                      window.document.ctrlForm.r1.value = "1:" + event.target.id + "=" + ui.draggable.context.id;
+                      checkDone();
+                }
+              });
+              $( "#droppable2" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(  event.target.id + "..." + ui.draggable.context.id   );
+                    window.document.ctrlForm.r2.value = "2:" + event.target.id + "=" + ui.draggable.context.id;
+                    checkDone();
+                }
+              });
+
+              $( "#droppable3" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(  event.target.id + "..." + ui.draggable.context.id  );
+                      window.document.ctrlForm.r3.value = "3:" + event.target.id + "=" + ui.draggable.context.id;
+                      checkDone();
+                }
+              });
+              $( "#droppable4" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(  event.target.id + "..." + ui.draggable.context.id   );
+                      window.document.ctrlForm.r4.value = "4:" + event.target.id + "=" + ui.draggable.context.id;
+                      checkDone();
+                }
+              });
+              $( "#droppable5" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(  event.target.id + "..." + ui.draggable.context.id  );
+                      window.document.ctrlForm.r5.value = "5:" + event.target.id + "=" + ui.draggable.context.id;
+                      checkDone();
+                }
+              });
+              $( "#droppable6" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(  event.target.id + "..." + ui.draggable.context.id  );
+                      window.document.ctrlForm.r6.value = "6:" + event.target.id + "=" + ui.draggable.context.id;
+                      checkDone();}
+              });
+
+      
+            };
+
+            $(function() {
+             
+              $( "#draggable0" ).draggable();
+              $( "#draggable1" ).draggable();
+              $( "#draggable2" ).draggable();
+              $( "#draggable3" ).draggable();
+              $( "#draggable4" ).draggable();
+              $( "#draggable5" ).draggable();
+              $( "#draggable6" ).draggable();
+
+              $( "#droppable0" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(  event.target.id + "..." + ui.draggable.context.id   );
+                      window.document.ctrlForm.r0.value = "0:" + event.target.id + "=" + ui.draggable.context.id;
+                    checkDone();
+
+                }
+              });
+
+
+              $( "#droppable1" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(   event.target.id + "..." + ui.draggable.context.id  );
+                      window.document.ctrlForm.r1.value = "1:" + event.target.id + "=" + ui.draggable.context.id;
+                      checkDone();
+                }
+              });
+              $( "#droppable2" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(  event.target.id + "..." + ui.draggable.context.id   );
+                    window.document.ctrlForm.r2.value = "2:" + event.target.id + "=" + ui.draggable.context.id;
+                    checkDone();
+                }
+              });
+
+              $( "#droppable3" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(  event.target.id + "..." + ui.draggable.context.id  );
+                      window.document.ctrlForm.r3.value = "3:" + event.target.id + "=" + ui.draggable.context.id;
+                      checkDone();
+                }
+              });
+              $( "#droppable4" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    .find( "p" )
+                      .html(  event.target.id + "..." + ui.draggable.context.id   );
+                      window.document.ctrlForm.r4.value = "4:" + event.target.id + "=" + ui.draggable.context.id;
+                      checkDone();
+                }
+              });
+              $( "#droppable5" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(  event.target.id + "..." + ui.draggable.context.id  );
+                      window.document.ctrlForm.r5.value = "5:" + event.target.id + "=" + ui.draggable.context.id;
+                      checkDone();
+                }
+              });
+              $( "#droppable6" ).droppable({
+                drop: function( event, ui ) {
+                  $( this )
+                    .addClass( "ui-state-highlight" )
+                    //.find( "p" )
+                    //  .html(  event.target.id + "..." + ui.draggable.context.id  );
+                      window.document.ctrlForm.r6.value = "6:" + event.target.id + "=" + ui.draggable.context.id;
+                      checkDone();}
+              });
+
+      
+            });
+            </script>
+
+
+
+
+<table>
+    <tr>
+        <td>
+            <h1>ueberschrift</h1>
+            <h2>ubers</h2>
+        </td>
+        <td>
+            <form name="ctrlForm">
+
+                <input name="count" size=4 maxlength=4 value="" STYLE="color: #FFFFFF; 
+                font-family: Verdana; font-weight: bold; font-size: 20px; background-color: #72A4D2; text-align:right;" readonly>
+                <input name="result" size=15 maxlength=18 value="" STYLE="color: #FFFFFF; 
+                font-family: Verdana; font-weight: bold; font-size: 20px; background-color: #72A4D2; text-align:right;" readonly>
+                <!-- <input name=mixB type=button value="Mischen" onClick="mixAnswers()"> -->  
+                <input name=reloadB type=button value="Neu Mischen" onClick="window.location.reload()">  
+                <br>
+            
+                <input type="hidden" name ="r0" size=40 value="1234567890abcdefghijklmn">
+                <input type="hidden" name="r1" size=40 value="1234567890abcdefghijklmn">
+                <input type="hidden" name="r2" size=40 value="1234567890abcdefghijklmn">
+                <input type="hidden" name="r3" size=40 value="1234567890abcdefghijklmn">
+                <input type="hidden" name="r4" size=40 value="1234567890abcdefghijklmn">
+                <input type="hidden" name="r5" size=40 value="1234567890abcdefghijklmn">
+                <input type="hidden" name="r6" size=40 value="1234567890abcdefghijklmn">
+                 
+            
+            </form>
+            
+            &nbsp; &nbsp; &nbsp;</td>
+        <td>
+            <img id="topImg" src="../m/happy.gif" style="display: none;" height="80">
+           
+        </td>
+    </tr>
+</table>
+
+
+            
+<table  border="5" bordercolor="#ff0000">
+
+
+   
+    <tr>      
+
+       
+
+
+        <td>
+           Was passt dazu? </td>
+      <td>
+      Ordne die Bilder zu! 
+      </td>
+      
+      <td>
+       
+      </td>
+    
+    
+
+  
+    
+      </tr>   
+
+
+<tr>      
+  <td><img src="processed/2020-01/000A.png" width=300></td>
+  
+<td>
+<div id="droppable0" class="ui-widget-header">
+  <p></p>
+</div>
+</td>
+
+<td>
+    <div id=field0>
+      <div id="draggable0" class="ui-widget-content"><img src="processed/2020-01/000L.png" width=300>
+    <p></p>
+  </div>
+  </div>
+</td>
+
+</td>
+</tr>    
+
+    <tr>
+        <td>
+            <img src="processed/2020-01/001A.png" width=300></td>
+       
+    <td>
+      <div id="droppable1" class="ui-widget-header">
+        <p></p>
+      </div>
+    </td>
+    <td>
+        <div id=field1>
+    
+    <div id="draggable1" class="ui-widget-content" ><img src="processed/2020-01/001L.png" width=300>
+        <p></p>
+      </div>
+    </div>
+</td>
+    
+    </tr>
+    <tr>      
+        <td><img src="processed/2020-01/002A.png" width=300></td>
+       
+    <td>
+      <div id="droppable2" class="ui-widget-header">
+        <p></p>
+      </div>
+    </td>
+
+    <td>
+        <div id=field2>
+            <div id="draggable2" class="ui-widget-content"><img src="processed/2020-01/002L.png" width=300>
+          <p></p>
+        </div>
+        </div>
+      </td>
+    
+    </td>
+    </tr>    
+
+  <tr>      
+      <td><img src="processed/2020-01/003A.png" width=300></td>
+     
+  <td>
+    <div id="droppable3" class="ui-widget-header">
+      <p></p>
+    </div>
+  </td>
+
+  <td>
+    <div id=field3>
+        <div id="draggable3" class="ui-widget-content"><img src="processed/2020-01/003L.png" width=300>
+        <p></p>
+    </div>
+</div>
+    </td>
+  
+  </td>
+  </tr>    
+
+  <tr>      
+    <td><img src="processed/2020-01/004A.png" width=300></td>
+   
+<td>
+  <div id="droppable4" class="ui-widget-header">
+    <p></p>
+  </div>
+</td>
+
+
+<td>
+    <div id=field4>
+    <div id="draggable4" class="ui-widget-content"><img src="processed/2020-01/004L.png" width=300>
+      <p></p>
+    </div>
+</div>
+  </td>
+
+</td>
+</tr>    
+
+<tr>      
+  <td><img src="processed/2020-01/005A.png" width=300></td>
+  
+<td>
+<div id="droppable5" class="ui-widget-header">
+  <p></p>
+</div>
+</td>
+
+<td>
+    <div id=field5>
+        <div id="draggable5" class="ui-widget-content"><img src="processed/2020-01/005L.png" width=300>
+    <p></p>
+  </div>
+</div>
+</td>
+
+</td>
+</tr>    
+
+
+<tr>      
+  <td><img src="processed/2020-01/006A.png" width=300></td>
+ 
+<td>
+<div id="droppable6" class="ui-widget-header">
+  <p></p>
+</div>
+</td>
+
+<td>
+    <div id=field6>
+
+      <div id="draggable6" class="ui-widget-content"><img src="processed/2020-01/006L.png" width=300>
+    <p></p>
+  </div>
+</div>
+</td>
+
+</tr>    
+
+
+
+
+
+
+
+
+
+
+</table>
+        
+
+  
+
+
+      
+ 
+
+   
+
+    </body>
+</html>

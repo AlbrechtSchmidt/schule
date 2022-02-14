@@ -1,0 +1,278 @@
+
+  <html>
+  <head>
+  <title>1x1 Reihen</title>
+  
+  <style type="text/css"> 
+	input,td, h2 { 
+    	font-family: verdana, arial; 
+    	font-size: 14px; 
+	}
+	
+	h1 { 
+    	font-family: verdana, arial; 
+    	font-size: 32px; 
+	} 
+	 
+    table { 
+        display: table;
+        border-collapse: separate;
+        border-spacing: 2px;
+        border-color: lightgreen;
+    }
+
+</style> 
+  
+  <script language="JavaScript">
+ 
+   const delayInSec = 2500;
+    var lastVal=0;
+    var reihe=6;
+ 
+ function aufgabe()
+ {
+   var max=10;
+   var a = 0;
+   var b = 0;
+   
+   // a = number to multiply
+   a= parseInt( Math.random() * ( 10+1 ) );
+   
+   // b = order (first num or first random number)
+   b= parseInt( Math.random() * ( 10+1 ) );
+   
+   
+   if (b<5){
+   	window.document.Rechner.question.value = reihe + "*" + a;   
+   } else {
+   	window.document.Rechner.question.value = a + "*" + reihe;   
+   }
+   
+   window.document.Rechner.dieReihe.value = reihe + "er Reihe";   
+ }
+ 
+
+ function drawTasks(neueReihe)
+ {
+   reihe=neueReihe;
+   aufgabe();
+   
+   window.document.Rechner.B0.value = "   " + eval(reihe)*0 + "    ";
+   window.document.Rechner.B1.value = "   " + eval(reihe)*1 + "    ";
+   window.document.Rechner.B2.value = "  " + eval(reihe)*2 + "   ";
+   window.document.Rechner.B3.value = "  " + eval(reihe)*3 + "   ";
+   window.document.Rechner.B4.value = "  " + eval(reihe)*4 + "   ";
+   window.document.Rechner.B5.value = "  " + eval(reihe)*5 + "   ";
+   window.document.Rechner.B6.value = "  " + eval(reihe)*6 + "   ";
+   window.document.Rechner.B7.value = "  " + eval(reihe)*7 + "   ";
+   window.document.Rechner.B8.value = "  " + eval(reihe)*8 + "   ";
+   window.document.Rechner.B9.value = "  " + eval(reihe)*9 + "   ";
+   window.document.Rechner.B10.value ="  " + eval(reihe)*10 + "   ";
+   
+ }
+ 
+ 
+ function checkResult(Zeichen)
+ {
+   var erg=0;
+   var x=0;
+   
+   erg=eval(window.document.Rechner.question.value);
+     
+   if(eval(Zeichen)*eval(reihe)==erg) {
+   	x=eval(window.document.Rechner.counterR.value);
+   	x=x+1;
+   	window.document.Rechner.counterR.value=x;
+       document.getElementById('topImg').src="happy.gif";
+       document.getElementById('happySound').play();
+       document.getElementById('topImg').style.display="block";
+       window.document.Rechner.question.value =  "....    ";
+       document.getElementById('messageLine').style.visibility='visible';
+       window.document.Rechner.aLine.value = "super richtig!...";
+       setTimeout(hideImg, delayInSec);
+   } else {
+   	x=eval(window.document.Rechner.counterF.value);
+   	x=x+1;
+   	window.document.Rechner.counterF.value=x;
+       document.getElementById('topImg').src="sad.gif";
+       document.getElementById('sadSound').play();
+       document.getElementById('topImg').style.display="block";
+       window.document.Rechner.question.value =  "....    ";
+       document.getElementById('messageLine').style.visibility='visible';
+       window.document.Rechner.aLine.value = "leider falsch...";
+       setTimeout(hideImg, delayInSec);
+   }
+
+   
+   setTimeout(aufgabe, delayInSec);
+
+
+   //aufgabe();   
+ }
+
+ function hideImg()
+ {
+    document.getElementById('topImg').style.display="none";
+    window.document.Rechner.aLine.value = "";
+    document.getElementById('messageLine').style.visibility='hidden';
+ }
+ 
+ 
+ function loeschen()
+ {
+ 	window.document.Rechner.counterF.value ="0";
+ 	window.document.Rechner.counterR.value ="0";
+ 	aufgabe();
+ }
+ 
+ 
+ function startup()
+ {
+ 	var a = 0;
+ 	window.document.Rechner.counterF.value ="0";
+ 	window.document.Rechner.counterR.value ="0";
+ 	
+ 	// a = number to multiply
+   	a= parseInt( Math.random() * ( 10+1 ) );
+   
+   	if (a<2) {a=2;};
+   	if (a>6) {a=6;}; //change this when the can calculate further...
+   	
+ 	drawTasks(a)
+ 	aufgabe();
+ }
+ 
+ 
+  </script>
+  </head>
+  
+  <body bgcolor=#FFFFFF text=#000000 link=#0000CC vlink=#000099 alink=#0000FF onload="startup()">
+
+
+      <audio id="sadSound" preload="auto">
+          <source src="schade.mp3" />
+      </audio>
+      
+      <audio id="happySound" preload="auto">
+          <source src="super.mp3" />
+      </audio>
+      
+
+
+  <form name="Rechner">
+  
+    <table>
+        <tr>  
+            <td>
+              
+                <h1>1x1 - Rechnen</h1> 
+            </td>
+            <td>
+               
+                &nbsp; &nbsp; &nbsp;
+            </td>
+            <td>
+                <a href="/mathe/">Zur&uuml;ck zur &Uuml;bersicht</a>
+        </tr>
+        <tr>
+            <td>
+                <img src="img/unikorn-fetty.JPG" " height="130">
+            </td>
+            <td>&nbsp; &nbsp;</td>
+            <td>
+                <img id="topImg" src="happy.gif" style="display: none;" height="130">
+                <!-- <div class="image" style="display: none;"><img src="sad.webp" height="100"></div> -->
+            </td>
+        </tr>
+        <tr>  
+            <td>
+                
+            </td>
+            <td>
+               
+               
+            </td>
+            <td>
+                <input  name="aLine" id="messageLine" size=20 maxlength=20 value="" STYLE="font-family: Verdana; font-weight: bold; font-size: 16px;visibility: hidden; background-color: transparent; border: 0px solid;" readonly>
+
+
+            </td>
+        </tr>
+        
+    </table>
+
+  <h2>Hier kannst du die Reihe ausw&auml;hlen!</h2>
+  
+  <input type=button value="1er" onClick="drawTasks('1')">
+  <input type=button value="2er" onClick="drawTasks('2')">
+  <input type=button value="3er" onClick="drawTasks('3')">
+  <input type=button value="4er" onClick="drawTasks('4')">
+  <input type=button value="5er" onClick="drawTasks('5')">
+  <input type=button value="6er" onClick="drawTasks('6')">
+  <input type=button value="7er" onClick="drawTasks('7')">
+  <input type=button value="8er" onClick="drawTasks('8')">
+  <input type=button value="9er" onClick="drawTasks('9')">
+  <input type=button value="10er" onClick="drawTasks('10')">
+  
+  <p/>
+    
+  <table border=10 cellpadding=10>
+  <tr>
+  <td bgcolor=#C0C0C0><input name="dieReihe" size=12 maxlength=12 value="" STYLE="color: #FFFFFF; 
+  	font-family: Verdana; font-weight: bold; font-size: 24px; background-color: #72A4D2;" readonly></td> 
+  </tr>
+  <tr>
+  <td bgcolor=#C0C0C0><input name="question" size=6 maxlength=6 value="" STYLE="font-family: Verdana;
+  	font-weight: bold; font-size: 18px;"> w&auml;hle das Ergebnis aus</td> 
+  </tr>
+  <tr><td><table>
+  <tr>
+  <td width=50><input name=B0 type=button value="    0    " onClick="checkResult('0')"></td>   
+  <td width=50><input name=B1 type=button value="    6    " onClick="checkResult('1')"></td>   
+  <td width=50><input name=B2 type=button value="   12   " onClick="checkResult('2')"></td>
+  <td width=50><input name=B3 type=button value="   18   " onClick="checkResult('3')"></td>
+  <td width=50><input name=B4 type=button value="   24   " onClick="checkResult('4')"></td>
+  <td width=50><input name=B5 type=button value="   30   " onClick="checkResult('5')"></td>
+  </tr>
+  <tr>
+  <td width=50><input name=B6 type=button value="   36   " onClick="checkResult('6')"></td>   
+  <td width=50><input name=B7 type=button value="   42   " onClick="checkResult('7')"></td>
+  <td width=50><input name=B8 type=button value="   48   " onClick="checkResult('8')"></td>
+  <td width=50><input name=B9 type=button value="   54   " onClick="checkResult('9')"></td>
+  <td width=50><input name=B10 type=button value="   60   " onClick="checkResult('10')"></td>
+  </tr>
+  <tr></tr>
+  </table>
+  
+  <!--
+  <tr>
+    <td><input type=button value=" Neue Aufgabe " onClick="aufgabe()"></td>
+  </tr>
+  -->
+   <tr>
+ 	 <td bgcolor=#C0C0C0><input name="counterR" size=4 maxlength=4 value="0"> richtige Aufgaben</td> 
+  </tr>
+  
+  <tr>
+ 	 <td bgcolor=#C0C0C0><input name="counterF" size=4 maxlength=4 value="0"> falsche Aufgaben</td> 
+  </tr>
+  <tr>
+<td bgcolor=#C0C0C0>  <input name=reset1 type=button value="alles L&ouml;schen" onClick="loeschen()"></td>
+  </tr>
+
+  
+  </td></tr></table>
+ 
+  
+  <hr>
+  <a href="/">Zur&uuml;ck zur Homepage</a> &nbsp; &nbsp;
+  <a href="/mathe/">Zur&uuml;ck zur &Uuml;bersicht</a>
+  
+  <hr>
+
+
+  </form>
+  </body>
+  </html>
+
+ 
