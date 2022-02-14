@@ -1,0 +1,308 @@
+  <html>
+  <head>
+  <title>Minus</title> 
+  
+  <style type="text/css"> 
+	input,td, h2 { 
+    	font-family: verdana, arial; 
+    	font-size: 14px; 
+	}
+	
+	h1 { 
+    	font-family: verdana, arial; 
+    	font-size: 32px; 
+	} 
+
+    table { 
+        display: table;
+        border-collapse: separate;
+        border-spacing: 2px;
+        border-color: lightgreen;
+        }
+	 
+</style> 
+  
+  <script language="JavaScript">
+  
+  const delayInSec = 4000;
+  var lastVal=0;
+  var next_a = 0;
+  var next_b = 0;
+  var aufgabeSmallBig = 1;
+
+ function aufgabe()
+ {
+   var max=10;
+   var a = 0;
+
+   if (aufgabeSmallBig == 0)
+   {
+        // a = number to double
+        while (a==lastVal)
+        {
+            a= parseInt( Math.random() * ( max+1 ) );
+        }
+
+        if (a<2) {a=2;};
+        if (a>(max)) {a=max;}; //change this when the can calculate further...
+
+        b=parseInt( Math.random() * ( a+1 ) ); 
+        if (b>=a) {b=a-1;};
+        if (b<1) {b=1;};
+
+        next_a = a +10;
+        next_b = b;
+        window.document.Rechner.question.value =  a + " - " + b;   
+        aufgabeSmallBig = 1;
+
+   } else {
+        window.document.Rechner.question.value =  next_a + " - " + next_b;   
+        aufgabeSmallBig = 0;
+   }
+   window.document.Rechner.aLine.value = "";
+ }
+ 
+
+ function drawTasks()
+ {
+   aufgabe();
+   
+   window.document.Rechner.B1.value = "  " + 1 + "   ";
+   window.document.Rechner.B2.value = "  " + 2 + "   ";
+   window.document.Rechner.B3.value = "  " + 3 + "   ";
+   window.document.Rechner.B4.value = "  " + 4 + "   ";
+   window.document.Rechner.B5.value = "  " + 5 + "   ";
+   window.document.Rechner.B6.value = "  " + 6 + "   ";
+   window.document.Rechner.B7.value = "  " + 7 + "   ";
+   window.document.Rechner.B8.value = "  " + 8 + "   ";
+   window.document.Rechner.B9.value = "  " + 9 + "   ";
+   window.document.Rechner.B10.value =" " + 10 + "   ";
+   window.document.Rechner.B11.value = " " + 11 + "   ";
+   window.document.Rechner.B12.value = " " + 12 + "   ";
+   window.document.Rechner.B13.value = " " + 13 + "   ";
+   window.document.Rechner.B14.value = " " + 14 + "   ";
+   window.document.Rechner.B15.value = " " + 15 + "   ";
+   window.document.Rechner.B16.value = " " + 16 + "   ";
+   window.document.Rechner.B17.value = " " + 17 + "   ";
+   window.document.Rechner.B18.value = " " + 18 + "   ";
+   window.document.Rechner.B19.value = " " + 19 + "   ";
+   window.document.Rechner.B20.value = " " + 20 + "   ";
+   
+ }
+ 
+ 
+ function checkResult(Zeichen)
+ {
+   var erg=0;
+   var x=0;
+   
+   erg=eval(window.document.Rechner.question.value);
+     
+   x=eval(window.document.Rechner.counterA.value);
+   x=x+1;
+   window.document.Rechner.counterA.value=x;
+
+
+   if(eval(Zeichen)==erg) {
+   	x=eval(window.document.Rechner.counterR.value);
+   	x=x+1;
+     window.document.Rechner.counterR.value=x;
+       document.getElementById('topImg').src="happy.gif";
+       document.getElementById('happySound').play();
+       document.getElementById('topImg').style.display="block";
+       window.document.Rechner.question.value =  "....    ";
+       document.getElementById('messageLine').style.visibility='visible';
+       window.document.Rechner.aLine.value = "super richtig!...";
+       setTimeout(hideImg, delayInSec);
+   } else {
+       document.getElementById('topImg').src="sad.gif";
+       document.getElementById('sadSound').play();
+       document.getElementById('topImg').style.display="block";
+       window.document.Rechner.question.value =  "....    ";
+       document.getElementById('messageLine').style.visibility='visible';
+       window.document.Rechner.aLine.value = "leider falsch...";
+       setTimeout(hideImg, delayInSec);
+      
+   }
+
+
+
+  
+  
+   setTimeout(aufgabe, delayInSec);
+   //aufgabe();   
+ }
+ 
+ function hideImg()
+ {
+    document.getElementById('topImg').style.display="none";
+    window.document.Rechner.aLine.value = "";
+    document.getElementById('messageLine').style.visibility='hidden';
+ 
+ }
+ 
+ 
+ function loeschen()
+ {
+ 	window.document.Rechner.counterA.value ="0";
+ 	window.document.Rechner.counterR.value ="0";
+ 	aufgabe();
+ }
+ 
+ 
+ function startup()
+ {
+ 	var a = 0;
+ 	window.document.Rechner.counterA.value ="0";
+ 	window.document.Rechner.counterR.value ="0";
+ 	
+ 	// a = number to multiply
+   	a= parseInt( Math.random() * ( 10+1 ) );
+   
+   	if (a<1) {a=1;};
+   	if (a>10) {a=10;}; //change this when the can calculate further...
+   	
+ 	drawTasks()
+ 	aufgabe();
+ }
+ 
+  //-->
+  </script>
+  </head>
+  
+  <body bgcolor=#FFFFFF text=#000000 link=#0000CC vlink=#000099 alink=#0000FF onload="startup()">
+ 
+     
+  <audio id="sadSound" preload="auto">
+    <source src="schade.mp3" />
+</audio>
+
+<audio id="happySound" preload="auto">
+    <source src="super.mp3" />
+</audio>
+
+
+    <form name="Rechner">
+
+      <table>
+          <tr>  
+              <td>
+                
+                  <h1>Minus</h1> 
+              </td>
+              <td>
+                 
+                  &nbsp; &nbsp; &nbsp;
+              </td>
+              <td>
+                  <a href="/mathe/">Zur&uuml;ck zur &Uuml;bersicht</a>
+          </tr>
+          <tr>
+              <td>
+                  <img src="img/maus.JPG" " height="130">
+              </td>
+              <td>&nbsp; &nbsp;</td>
+              <td>
+                  <img id="topImg" src="happy.gif" style="display: none;" height="130">
+                  <!-- <div class="image" style="display: none;"><img src="sad.webp" height="100"></div> -->
+              </td>
+          </tr>
+          <tr>  
+              <td>
+                  
+              </td>
+              <td>
+                 
+                 
+              </td>
+              <td>
+                  <input  name="aLine" id="messageLine" size=20 maxlength=20 value="" STYLE="font-family: Verdana; font-weight: bold; font-size: 16px;visibility: hidden; background-color: transparent; border: 0px solid;" readonly>
+  
+  
+              </td>
+          </tr>
+          
+      </table>
+
+  <!--<h2>Verdoppele die Zahl
+  </h2>
+-->
+  
+
+  <table border=10 cellpadding=10>
+  <tr>
+  <td bgcolor=#C0C0C0>Was ist: <input name="question" size=8 maxlength=8 value="" STYLE="color: #FFFFFF; 
+  	font-family: Verdana; font-weight: bold; font-size: 20px; background-color: #72A4D2; text-align:right;" readonly></td> 
+  </tr>
+  <tr>
+
+  </tr>
+  <tr><td><table>
+<!-- <tr>
+    <td width=50><input name=B0 type=button value="   0   " onClick="checkResult('0')"></td>   
+    </tr>
+-->
+<tr>
+
+  <td width=50><input name=B1 type=button value="   1   " onClick="checkResult('1')"></td>   
+  <td width=50><input name=B2 type=button value="   2   " onClick="checkResult('2')"></td>
+  <td width=50><input name=B3 type=button value="   3   " onClick="checkResult('3')"></td>
+  <td width=50><input name=B4 type=button value="   4   " onClick="checkResult('4')"></td>
+  <td width=50><input name=B5 type=button value="   5   " onClick="checkResult('5')"></td>
+  </tr>
+  <tr>
+  <td width=50><input name=B6 type=button value="   6   " onClick="checkResult('6')"></td>   
+  <td width=50><input name=B7 type=button value="   7   " onClick="checkResult('7')"></td>
+  <td width=50><input name=B8 type=button value="   8   " onClick="checkResult('8')"></td>
+  <td width=50><input name=B9 type=button value= "   9   " onClick="checkResult('9')"></td>
+  <td width=50><input name=B10 type=button value="  10   " onClick="checkResult('10')"></td>
+  </tr>
+  <tr>
+    <td width=50><input name=B11 type=button value="  11   " onClick="checkResult('11')"></td>   
+    <td width=50><input name=B12 type=button value="  12   " onClick="checkResult('12')"></td>
+    <td width=50><input name=B13 type=button value="  13   " onClick="checkResult('13')"></td>
+    <td width=50><input name=B14 type=button value="  14   " onClick="checkResult('14')"></td>
+    <td width=50><input name=B15 type=button value="  15   " onClick="checkResult('15')"></td>
+    </tr>
+    <tr>
+        <td width=50><input name=B16 type=button value="  16   " onClick="checkResult('16')"></td>   
+        <td width=50><input name=B17 type=button value="  17   " onClick="checkResult('17')"></td>
+        <td width=50><input name=B18 type=button value="  18   " onClick="checkResult('18')"></td>
+        <td width=50><input name=B19 type=button value="  19   " onClick="checkResult('19')"></td>
+        <td width=50><input name=B20 type=button value="  20   " onClick="checkResult('20')"></td>
+        </tr>
+  <tr></tr>
+  </table>
+  
+  <!--
+  <tr>
+    <td><input type=button value=" Neue Aufgabe " onClick="aufgabe()"></td>
+  </tr>
+  -->
+   <tr>
+ 	 <td bgcolor=#C0C0C0><input name="counterR" size=4 maxlength=4 value="0"> richtige Aufgaben</td> 
+  </tr>
+  
+  <tr>
+ 	 <td bgcolor=#C0C0C0><input name="counterA" size=4 maxlength=4 value="0"> Aufgaben insgesamt</td> 
+  </tr>
+  <tr>
+<td bgcolor=#C0C0C0>  <input name=reset1 type=button value="alles l&ouml;schen" onClick="loeschen()"></td>
+  </tr>
+
+  
+  </table>
+ 
+  <hr>
+  <a href="/">Zur&uuml;ck zur Homepage</a> &nbsp; &nbsp;
+  <a href="/mathe/">Zur&uuml;ck zur &Uuml;bersicht</a>
+  
+ 
+  <hr>
+  Albrecht Schmidt, Petra Dollinger, 2020-03-15
+
+  </form>
+  </body>
+  </html>
+
+ 
